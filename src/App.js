@@ -11,7 +11,7 @@ import Orders from './Orders';
 import './App.css';
 
 // Smart contract details
-const contractAddress = "0x6d925938edb8a16b3035a4cf34faa090f490202a";
+const contractAddress = "0x4A813F566f743A1a5936a1ac5C523E0b2F34F533";
 const contractABI = [
   {
     "inputs": [],

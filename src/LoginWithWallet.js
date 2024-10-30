@@ -11,7 +11,7 @@ const LoginWithWallet = ({ account }) => {
   const navigate = useNavigate();
 
   // Define the smart contract address and ABI (Interface)
-  const contractAddress = '0x6d925938edb8a16b3035a4cf34faa090f490202a'; // Replace with your deployed contract address
+  const contractAddress = '0x4A813F566f743A1a5936a1ac5C523E0b2F34F533'; // Replace with your deployed contract address
   const contractABI = [
     {
       "inputs": [{"internalType": "string","name": "_shippingAddress","type": "string"}],
