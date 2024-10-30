@@ -1,0 +1,81 @@
+/* Container for the entire login page */
+.login-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #b7db9b; /* Light green background */
+  }
+  
+  /* Section for the logo */
+  .logo-section {
+    margin-bottom: 30px;
+  }
+  
+  .crow-logo {
+    width: 100px;
+    height: 100px;
+    margin-bottom: 20px;
+  }
+  
+  /* Box containing the wallet address and input field */
+  .login-box {
+    background-color: white;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+    width: 300px;
+  }
+  
+  /* Wallet address label */
+  .wallet-label {
+    font-size: 16px;
+    font-weight: bold;
+    margin-bottom: 10px;
+  }
+  
+  /* Wallet address text */
+  .wallet-address {
+    background-color: #f0f0f0;
+    padding: 10px;
+    border-radius: 5px;
+    font-size: 14px;
+    word-wrap: break-word;
+  }
+  
+  /* Input field for the shipping address */
+  .input-field {
+    margin-top: 20px;
+  }
+  
+  .input-field label {
+    display: block;
+    margin-bottom: 12px;
+    font-size: 14px;
+  }
+  
+  .input-field input {
+    width: 93%;
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+  }
+  
+  /* Login button */
+  .login-button {
+    margin-top: 40px;
+    padding: 10px;
+    width: 100%;
+    background-color: #8bc34a;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+  }
+  
+  .login-button:hover {
+    background-color: #76b63b;
+  }
+  

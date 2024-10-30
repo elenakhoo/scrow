@@ -1,0 +1,81 @@
+.orders-wrapper {
+    width: 100%;
+    padding: 20px;
+    background-color: #f5f5f5;
+  }
+  
+  h3 {
+    color: #333;
+  }
+  
+  .order-card {
+    display: flex;
+    align-items: center;
+    border: 1px solid #1e90ff;
+    border-radius: 8px;
+    padding: 15px;
+    margin: 15px 0;
+    background-color: #fff;
+  }
+  
+  .order-content {
+    display: flex;
+    width: 100%;
+  }
+  
+  .order-image img {
+    width: 80px;
+    height: 80px;
+    margin-right: 20px;
+  }
+  
+  .order-details {
+    flex-grow: 1;
+  }
+  
+  .product-name,
+  .product-quantity,
+  .buyer-info,
+  .shipping-address {
+    margin: 4px 0;
+    font-size: 14px;
+    color: #333;
+  }
+  
+  .order-actions {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+  }
+  
+  .order-price {
+    font-size: 18px;
+    color: #8bc34a;
+    font-weight: bold;
+  }
+  
+  .action-buttons {
+    display: flex;
+    margin-top: 10px;
+  }
+  
+  .cancel-button,
+  .fulfill-button {
+    padding: 8px 12px;
+    font-size: 14px;
+    margin-left: 8px;
+    border-radius: 5px;
+    border: none;
+    cursor: pointer;
+  }
+  
+  .cancel-button {
+    background-color: #d3f6ce;
+    color: #333;
+  }
+  
+  .fulfill-button {
+    background-color: #8bc34a;
+    color: #fff;
+  }
+  

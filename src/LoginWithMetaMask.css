@@ -1,0 +1,47 @@
+/* Main container for the login page */
+.login-container {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-color: #b7dd72;
+}
+
+/* Logo Section */
+.logo-section {
+  text-align: center;
+}
+
+.crow-logo {
+  width: 150px;
+  margin-bottom: 20px;
+}
+
+/* Login Button Section */
+.login-button-section {
+  margin-top: 20px;
+}
+
+.metamask-button {
+  background-color: #fff;
+  border: none;
+  display: flex;
+  align-items: center;
+  padding: 10px;
+  cursor: pointer;
+  font-size: 18px;
+  color: #000;
+  border-radius: 10px;
+}
+
+.metamask-button:hover {
+  opacity: 0.9;
+}
+
+/* MetaMask Logo */
+.metamask-logo {
+  width: 40px;
+  height: 40px;
+  margin-right: 10px;
+}

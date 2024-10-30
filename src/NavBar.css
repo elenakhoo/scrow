@@ -1,0 +1,68 @@
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #B7DD79;
+  padding: 10px 20px;
+  color: black;
+  height: 60px;
+  font-family: 'Roboto';
+}
+
+.navbar-left {
+  display: flex;
+  align-items: center;
+  flex: 1;
+}
+
+.logo {
+  font-size: 24px;
+  font-weight: bold;
+  margin-left: 8px;
+  cursor: pointer;
+}
+
+.navbar-center {
+  flex-grow: 10;
+  display: flex;
+  justify-content: center;
+}
+
+.search-input {
+  width: 90%;
+  padding: 15px;
+  border-radius: 5px;
+  border: none;
+  font-size: 16px;
+}
+
+.navbar-right {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.nav-link {
+  color: white;
+  text-decoration: none;
+  font-size: 14px;
+}
+
+.nav-acc-number {
+  color: white;
+}
+
+.language-select {
+  padding: 5px;
+  border-radius: 5px;
+  border: none;
+}
+
+.profile-icon img {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  margin-right: 8px;
+  cursor: pointer;
+}
+
