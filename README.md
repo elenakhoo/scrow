@@ -8,6 +8,9 @@
 - Cart management with React state
 - Shipping address management stored on the blockchain
 
+## Upcoming Features
+- Order fulfillment with escrow implementation utilizing blockchain-based database
+
 ## Tech Stack
 - **Ethereum Blockchain** (Sepolia Testnet)
 - **Smart Contracts**: Written in Solidity
