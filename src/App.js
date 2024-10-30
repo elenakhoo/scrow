@@ -32,7 +32,7 @@ function App() {
   // Function to fetch all products from the blockchain
   const fetchAllProducts = async () => {
     try {
-      const provider = new JsonRpcProvider("http://127.0.0.1:8545");
+      const provider = new JsonRpcProvider("https://sepolia.infura.io/v3/b4afcbbebc2b47598d043747b32d4a24");
       const contract = new Contract(contractAddress, contractABI, provider);
       const allProducts = await contract.getAllProducts({ blockTag: "latest" });
       
