@@ -12,7 +12,7 @@ const LoginWithMetaMask = ({ connectMetaMask }) => {
   const navigate = useNavigate();
 
   // Define the smart contract address and ABI (Interface)
-  const contractAddress = '0x4A813F566f743A1a5936a1ac5C523E0b2F34F533'; // Replace with your deployed contract address
+  const contractAddress = '0xc1082A249ADA138DE70e0736676727bDd601c6b8'; // Replace with your deployed contract address
   const contractABI = [
     {
       "inputs": [{"internalType": "address","name": "_user","type": "address"}],

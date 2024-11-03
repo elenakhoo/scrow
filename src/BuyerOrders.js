@@ -1,39 +1,36 @@
+// BuyerOrders.js
 import React from 'react';
-import { BrowserProvider, Contract } from 'ethers';
+import { BrowserProvider, Contract } from 'ethers'; // Make sure ethers is installed
 import './Orders.css';
 
-// Contract address and ABI
 const contractAddress = '0xc1082A249ADA138DE70e0736676727bDd601c6b8';
 const contractABI = [
-  // ABI for fulfillOrder function
+  // Include only the acceptOrder function in the ABI here for simplicity
   {
-    "inputs": [
-      { "internalType": "uint", "name": "_orderId", "type": "uint" }
-    ],
-    "name": "fulfillOrder",
+    "inputs": [{"internalType": "uint", "name": "_orderId", "type": "uint"}],
+    "name": "acceptOrder",
     "outputs": [],
     "stateMutability": "nonpayable",
     "type": "function"
   },
+  // Add other contract ABI definitions as needed
 ];
 
-const Orders = ({ orders }) => {
-  // Function to fulfill an order
-  const handleFulfillOrder = async (orderId) => {
+const BuyerOrders = ({ orders, account }) => {
+  const acceptOrder = async (orderId) => {
     if (window.ethereum) {
       try {
         const provider = new BrowserProvider(window.ethereum);
         const signer = await provider.getSigner();
         const contract = new Contract(contractAddress, contractABI, signer);
 
-        console.log(`Fulfilling order with ID: ${orderId}`);
-        const tx = await contract.fulfillOrder(orderId);
+        // Call the acceptOrder function on the contract
+        const tx = await contract.acceptOrder(orderId);
         await tx.wait();
-
-        alert(`Order ${orderId} fulfilled successfully!`);
+        alert('Order accepted successfully!');
       } catch (error) {
-        console.error('Error fulfilling order:', error);
-        alert('Failed to fulfill the order.');
+        console.error('Error accepting order:', error);
+        alert('Failed to accept the order.');
       }
     } else {
       console.warn('Ethereum provider not available.');
@@ -42,7 +39,7 @@ const Orders = ({ orders }) => {
 
   return (
     <div className="orders-wrapper">
-      <h3>Orders</h3>
+      <h3>Your Orders</h3>
       {orders.length === 0 ? (
         <p>No orders available.</p>
       ) : (
@@ -50,7 +47,6 @@ const Orders = ({ orders }) => {
           <div key={index} className="order-card">
             <div className="order-content">
               <h4>Order ID: {parseInt(order.orderId)}</h4>
-              <p className="buyer-info">Buyer: {order.buyer}</p>
               <p className="order-price">Total: {order.totalPrice} CROW</p>
               <div className="order-details">
                 <h5>Products:</h5>
@@ -66,16 +62,18 @@ const Orders = ({ orders }) => {
                   </div>
                 ))}
               </div>
+              <div className="order-status">
+                <p>Status: {order.isFulfilled ? 'Fulfilled' : 'Pending'}</p>
+              </div>
               <div className="order-actions">
-                <div className="action-buttons">
-                  <button className="cancel-button">Cancel</button>
-                  <button 
-                    className="fulfill-button" 
-                    onClick={() => handleFulfillOrder(order.orderId)}
+                {order.isFulfilled && !order.isAccepted && (
+                  <button
+                    className="accept-button"
+                    onClick={() => acceptOrder(order.orderId)}
                   >
-                    Fulfill Order
+                    Accept Order
                   </button>
-                </div>
+                )}
               </div>
             </div>
           </div>
@@ -85,4 +83,4 @@ const Orders = ({ orders }) => {
   );
 };
 
-export default Orders;
+export default BuyerOrders;

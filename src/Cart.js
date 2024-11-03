@@ -1,8 +1,9 @@
 import React, { useEffect, useState, useCallback } from 'react';
-import { BrowserProvider, Contract } from 'ethers'; // Ensure you have the ethers package installed
+import { parseUnits, BrowserProvider, Contract, toBigInt } from 'ethers';
 import './Cart.css';
 
-// Move contractABI outside the component
+
+// Update the contract ABI to match the new implementation
 const contractABI = [
   {
     "inputs": [{"internalType": "address","name": "_user","type": "address"}],
@@ -24,6 +25,23 @@ const contractABI = [
     "outputs": [],
     "stateMutability": "nonpayable",
     "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "tuple[]",
+        "name": "_items",
+        "type": "tuple[]",
+        "components": [
+          { "internalType": "uint", "name": "productId", "type": "uint" },
+          { "internalType": "uint", "name": "quantity", "type": "uint" }
+        ]
+      }
+    ],
+    "name": "placeOrder",
+    "outputs": [],
+    "stateMutability": "payable",
+    "type": "function"
   }
 ];
 
@@ -33,7 +51,7 @@ const Cart = ({ cart, setCart, account }) => {
   const [isSaving, setIsSaving] = useState(false); // State to track if the save process is ongoing
   const [isEditVisible, setIsEditVisible] = useState(false); // Toggle visibility for edit section
 
-  const contractAddress = '0x4A813F566f743A1a5936a1ac5C523E0b2F34F533'; // Replace with your deployed contract address
+  const contractAddress = '0xc1082A249ADA138DE70e0736676727bDd601c6b8'; // Replace with your deployed contract address
 
   const fetchShippingAddress = useCallback(async () => {
     if (account && window.ethereum) {
@@ -59,30 +77,73 @@ const Cart = ({ cart, setCart, account }) => {
     }
   }, [account, contractAddress]);
 
+  // Function to create an order with multiple products
+  const createOrder = async (totalPrice) => {
+    if (window.ethereum) {
+        try {
+            const provider = new BrowserProvider(window.ethereum);
+            const signer = await provider.getSigner();
+            const contract = new Contract(contractAddress, contractABI, signer);
+
+            // Prepare the items for the order
+            const orderItems = cart.map(item => ({
+                productId: item.id,
+                quantity: item.quantity,
+            }));
+
+            console.log("Order items to be sent:", orderItems);
+
+            // Send transaction with totalPrice as the value (make sure it's BigInt)
+            const tx = await contract.placeOrder(orderItems, { value: totalPrice });
+            await tx.wait();
+            alert('Order created successfully!');
+        } catch (error) {
+            console.error('Error creating order:', error);
+            alert('Failed to create the order.');
+        }
+    } else {
+        console.warn('Ethereum provider not available.');
+    }
+  };
+
+  
+
+  // Triggered when "Buy Now" is clicked
+  const handleBuyNow = () => {
+    // Calculate total price in wei using ethers.toBigInt
+    const totalPrice = cart.reduce((total, item) => {
+        const itemPriceInWei = parseUnits(item.price.toString(), 18);
+        return toBigInt(total) + toBigInt(itemPriceInWei) * toBigInt(item.quantity);
+    }, toBigInt(0));
+
+    console.log("Total Price in Wei:", totalPrice.toString());
+    createOrder(totalPrice);
+};
+
+
   useEffect(() => {
     if (account) {
       fetchShippingAddress();
     }
   }, [account, fetchShippingAddress]);
 
-  // Function to save the new shipping address to the blockchain
   const saveShippingAddress = async () => {
     if (newShippingAddress && window.ethereum) {
       setIsSaving(true);
       try {
         const provider = new BrowserProvider(window.ethereum);
-        const signer = await provider.getSigner(); // Get the signer for sending transactions
-        const contract = new Contract(contractAddress, contractABI, signer); // Use signer instead of provider for sending tx
+        const signer = await provider.getSigner();
+        const contract = new Contract(contractAddress, contractABI, signer);
 
         console.log('Saving shipping address to blockchain:', newShippingAddress);
 
-        const tx = await contract.setShippingAddress(newShippingAddress); // Send the transaction
-        await tx.wait(); // Wait for the transaction to be mined
+        const tx = await contract.setShippingAddress(newShippingAddress);
+        await tx.wait();
 
         console.info('Shipping address saved successfully:', newShippingAddress);
         setShippingAddress(newShippingAddress);
         setIsSaving(false);
-        setIsEditVisible(false); // Hide edit section after saving
+        setIsEditVisible(false);
         alert('Shipping address updated successfully on the blockchain!');
       } catch (error) {
         console.error('Error saving shipping address:', error);
@@ -92,12 +153,10 @@ const Cart = ({ cart, setCart, account }) => {
     }
   };
 
-  // Toggle the visibility of the edit section
   const toggleEditSection = () => {
     setIsEditVisible(!isEditVisible);
   };
 
-  // Function to increase the quantity of a specific item
   const increaseQuantity = (id) => {
     const updatedCart = cart.map((item) =>
       item.id === id ? { ...item, quantity: item.quantity + 1 } : item
@@ -105,13 +164,12 @@ const Cart = ({ cart, setCart, account }) => {
     setCart(updatedCart);
   };
 
-  // Function to decrease the quantity of a specific item and remove it if it reaches 0
   const decreaseQuantity = (id) => {
     const updatedCart = cart
       .map((item) =>
         item.id === id ? { ...item, quantity: item.quantity - 1 } : item
       )
-      .filter(item => item.quantity > 0);  // Remove items with 0 or less quantity
+      .filter(item => item.quantity > 0);
 
     setCart(updatedCart);
   };
@@ -129,14 +187,11 @@ const Cart = ({ cart, setCart, account }) => {
                 <img src="https://via.placeholder.com/150" alt="Product" />
               </div>
               <span>{item.name}</span>
-
-              {/* Quantity Control */}
               <div className="quantity-control">
                 <button className="minus-btn" onClick={() => decreaseQuantity(item.id)}>-</button>
                 <span className="cart-item-quantity">{item.quantity}</span>
                 <button className="plus-btn" onClick={() => increaseQuantity(item.id)}>+</button>
               </div>
-
               <span className="cart-price-font">{item.price} CROW</span>
             </div>
           ))
@@ -151,16 +206,14 @@ const Cart = ({ cart, setCart, account }) => {
               </span>
             </div>
             
-            <button className="buy-now">Buy Now</button>
+            <button className="buy-now" onClick={handleBuyNow}>Buy Now</button>
           </div>
         )}
         
-        {/* Display the fetched shipping address */}
         <h4>Shipping Address:</h4>
         <p>{shippingAddress}</p>
         <button onClick={toggleEditSection}>{isEditVisible ? 'Cancel' : 'Edit'}</button>
 
-        {/* Input field to edit shipping address */}
         {isEditVisible && (
           <div className="edit-shipping-address">
             <h4>Edit Shipping Address:</h4>
@@ -168,7 +221,7 @@ const Cart = ({ cart, setCart, account }) => {
               type="text"
               value={newShippingAddress}
               onChange={(e) => setNewShippingAddress(e.target.value)}
-              disabled={isSaving} // Disable the input while saving
+              disabled={isSaving}
             />
             <button className="edit-shipping-address-button" onClick={saveShippingAddress} disabled={isSaving}>
               {isSaving ? 'Saving...' : 'Save Address'}

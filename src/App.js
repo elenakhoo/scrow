@@ -9,9 +9,12 @@ import LoginWithMetaMask from './LoginWithMetaMask';
 import LoginWithWallet from './LoginWithWallet';
 import Orders from './Orders';
 import './App.css';
+import OrdersPage from './OrdersPage';
+import BuyerOrdersPage from './BuyerOrdersPage';
+import { formatUnits } from 'ethers'; // Direct import for ethers@6
 
 // Smart contract details
-const contractAddress = "0x4A813F566f743A1a5936a1ac5C523E0b2F34F533";
+const contractAddress = "0xc1082A249ADA138DE70e0736676727bDd601c6b8";
 const contractABI = [
   {
     "inputs": [],
@@ -38,9 +41,9 @@ function App() {
       
       // Format products data
       const formattedProducts = allProducts.map(([id, name, price, description, available]) => ({
-        id: Number(id),
+        id,
         name,
-        price: Number(price),
+        price: formatUnits(price, 18),
         description,
         available
       }));
@@ -139,7 +142,8 @@ function AppContent({ account, isConnected, connectMetaMask, cart, setCart, prod
           <Route path="/" element={<ProductList products={products} loading={loading} />} />
           <Route path="/product/:id" element={<ProductDetails products={products} cart={cart} setCart={setCart} isConnected={isConnected} />} />
           <Route path="/cart" element={<Cart cart={cart} setCart={setCart} account={account} />} />
-          <Route path="/order" element={<Orders />} />
+          <Route path="/seller" element={<OrdersPage account={account}/>} />
+          <Route path="/buyer" element={<BuyerOrdersPage account={account}/>} />
         </Routes>
       </main>
     </div>

@@ -6,7 +6,7 @@ import 'react-toastify/dist/ReactToastify.css';
 
 const ProductDetails = ({ products, cart, setCart, isConnected }) => {
   const { id } = useParams(); // Get the product ID from the URL parameters
-  const product = products.find((product) => product.id === parseInt(id)); // Find the product by ID
+  const product = products.find((product) => parseInt(product.id) === parseInt(id)); // Find the product by ID
   const navigate = useNavigate();
   const [quantity, setQuantity] = useState(1);
 

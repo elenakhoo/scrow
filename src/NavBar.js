@@ -26,7 +26,11 @@ const NavBar = ({ account, isConnected, connectMetaMask }) => {
   }
 
   const handleOrderClick = () => {
-    navigate(`/orders`);
+    navigate(`/seller`);
+  }
+
+  const handleBuyerClick = () => {
+    navigate(`/buyer`);
   }
 
   return (
@@ -46,7 +50,8 @@ const NavBar = ({ account, isConnected, connectMetaMask }) => {
       </div>
 
       <div className="navbar-right">
-        <a href="/seller-center" className="nav-link" onClick={handleOrderClick}>Seller Center</a>
+        <a href="/seller" className="nav-link" onClick={handleOrderClick}>Seller Center</a>
+        <a href="/buyer" className="nav-link" onClick={handleBuyerClick}>Buyer Center</a>
         <div className="profile-icon">
           <img src={logo1} alt="Cart icon" onClick={handleCartClick} />
         </div>
