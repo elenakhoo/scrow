@@ -24,6 +24,7 @@ const ProductList = ({ products, loading }) => {
               rating="N/A" // Placeholder since rating is not available
               sold={0}     // Placeholder for sold count
               id={product.id}
+              imageUrl={product.imageUrl}
             />
           </div>
         ))

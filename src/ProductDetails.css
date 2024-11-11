@@ -19,9 +19,13 @@
 }
 
 .main-image {
-    aspect-ratio: 1/1;
+    aspect-ratio: 1 / 1;
     background-color: #ccc;
-    margin-bottom: 15px;
+    background-size: cover;       /* This will make the image cover the div without distortion */
+    background-position: center;  /* Center the image in the div */
+    background-repeat: no-repeat; /* Prevent tiling if the image is smaller */
+    width: 100%;                  /* Make sure it fills the container width */
+    height: auto;                 /* Maintain the aspect ratio based on width */
 }
 
 .product-info-section {

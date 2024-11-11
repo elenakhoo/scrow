@@ -14,16 +14,60 @@ import BuyerOrdersPage from './BuyerOrdersPage';
 import { formatUnits } from 'ethers'; // Direct import for ethers@6
 
 // Smart contract details
-const contractAddress = "0xc1082A249ADA138DE70e0736676727bDd601c6b8";
+const contractAddress = "0x14D7303E376B5C20465a139c9f95Ee5Eae561620";
 const contractABI = [
   {
     "inputs": [],
     "name": "getAllProducts",
-    "outputs": [{"components": [{"internalType": "uint","name": "id","type": "uint"},{"internalType": "string","name": "name","type": "string"},{"internalType": "uint","name": "price","type": "uint"},{"internalType": "string","name": "description","type": "string"},{"internalType": "bool","name": "available","type": "bool"}],"internalType": "struct UserDatabase.Product[]","name":"","type":"tuple[]"}],
+    "outputs": [
+      {
+        "components": [
+          {
+            "internalType": "uint",
+            "name": "id",
+            "type": "uint"
+          },
+          {
+            "internalType": "string",
+            "name": "name",
+            "type": "string"
+          },
+          {
+            "internalType": "uint",
+            "name": "price",
+            "type": "uint"
+          },
+          {
+            "internalType": "string",
+            "name": "description",
+            "type": "string"
+          },
+          {
+            "internalType": "string",
+            "name": "imageUrl",
+            "type": "string"
+          },
+          {
+            "internalType": "bool",
+            "name": "available",
+            "type": "bool"
+          },
+          {
+            "internalType": "string",
+            "name": "sellerId",
+            "type": "string"
+          }
+        ],
+        "internalType": "struct UserDatabase.Product[]",
+        "name": "",
+        "type": "tuple[]"
+      }
+    ],
     "stateMutability": "view",
     "type": "function"
   }
 ];
+
 
 function App() {
   const [cart, setCart] = useState([]); // Initialize cart state
@@ -39,15 +83,18 @@ function App() {
       const contract = new Contract(contractAddress, contractABI, provider);
       const allProducts = await contract.getAllProducts({ blockTag: "latest" });
       
+      console.log(allProducts)
       // Format products data
-      const formattedProducts = allProducts.map(([id, name, price, description, available]) => ({
+      const formattedProducts = allProducts.map(([id, name, price, description, imageUrl, available, sellerId]) => ({
         id,
         name,
         price: formatUnits(price, 18),
         description,
-        available
+        imageUrl,
+        available,
+        sellerId
       }));
-      
+      console.log(formattedProducts)
       setProducts(formattedProducts);
     } catch (error) {
       console.error("Error fetching products:", error);

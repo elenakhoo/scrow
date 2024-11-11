@@ -5,7 +5,7 @@ import './Orders.css';
 import { formatUnits } from 'ethers'; // Direct import for ethers@6
 
 
-const contractAddress = '0xc1082A249ADA138DE70e0736676727bDd601c6b8';
+const contractAddress = '0x14D7303E376B5C20465a139c9f95Ee5Eae561620';
 const contractABI = [
   {
     "inputs": [{"internalType": "address","name": "_seller","type": "address"}],
@@ -19,7 +19,9 @@ const contractABI = [
           "type": "tuple[]",
           "components": [
             {"internalType": "uint", "name": "productId", "type": "uint"},
-            {"internalType": "uint", "name": "quantity", "type": "uint"}
+            {"internalType": "uint", "name": "quantity", "type": "uint"},
+            { "internalType": "string", "name": "name", "type": "string" },
+            { "internalType": "string", "name": "imageUrl", "type": "string" }
           ]
         },
         {"internalType": "address","name": "buyer","type": "address"},
@@ -58,6 +60,8 @@ const OrdersPage = ({ account }) => {
           items: order.items.map(item => ({
             productId: item.productId,
             quantity: item.quantity,
+            name: item.name,
+            imageUrl: item.imageUrl
           })),
           buyer: order.buyer,
           totalPrice: formatUnits(order.totalPrice, 18),

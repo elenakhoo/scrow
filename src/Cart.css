@@ -94,3 +94,12 @@
     width: fit-content;
     margin-top: 10px;
   }
+
+  .seller-total {
+    margin-top: 20px;
+    margin-bottom: 10px;
+  }
+
+  .buy-now-cart {
+    margin-bottom: 30px;
+  }

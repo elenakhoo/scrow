@@ -3,7 +3,7 @@ import { BrowserProvider, Contract } from 'ethers';
 import './Orders.css';
 
 // Contract address and ABI
-const contractAddress = '0xc1082A249ADA138DE70e0736676727bDd601c6b8';
+const contractAddress = '0x14D7303E376B5C20465a139c9f95Ee5Eae561620';
 const contractABI = [
   // ABI for fulfillOrder function
   {
@@ -42,7 +42,7 @@ const Orders = ({ orders }) => {
 
   return (
     <div className="orders-wrapper">
-      <h3>Orders</h3>
+      <h3>Seller Orders</h3>
       {orders.length === 0 ? (
         <p>No orders available.</p>
       ) : (
@@ -57,9 +57,10 @@ const Orders = ({ orders }) => {
                 {order.items.map((item, itemIndex) => (
                   <div key={itemIndex} className="order-item">
                     <div className="order-image">
-                      <img src="https://via.placeholder.com/100" alt="Product" />
+                    <img src={item.imageUrl || "https://via.placeholder.com/100"} alt={item.name} />
                     </div>
                     <div className="item-details">
+                      <p className="product-name">Name: {item.name}</p>
                       <p className="product-id">Product ID: {parseInt(item.productId)}</p>
                       <p className="product-quantity">Quantity: {parseInt(item.quantity)}</p>
                     </div>

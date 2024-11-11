@@ -48,7 +48,7 @@ const ProductDetails = ({ products, cart, setCart, isConnected }) => {
         <div
           className="main-image"
           style={{
-            backgroundImage: `url(${product.image || 'https://via.placeholder.com/300'})`
+            backgroundImage: `url(${product.imageUrl || 'https://via.placeholder.com/300'})`
           }}
         ></div>
       </div>

@@ -46,10 +46,8 @@
   color: white;
   text-decoration: none;
   font-size: 14px;
-}
-
-.nav-link :hover {
   cursor: pointer;
+
 }
 
 .nav-acc-number {
@@ -69,4 +67,3 @@
   margin-right: 8px;
   cursor: pointer;
 }
-

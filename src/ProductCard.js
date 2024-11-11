@@ -4,7 +4,7 @@ import heartNorm from './heartnorm.png';
 import heartLiked from './heartliked.png';
 import { useNavigate } from 'react-router-dom';
 
-const ProductCard = ({name, price, rating, sold, id}) => {
+const ProductCard = ({name, price, rating, sold, id, imageUrl}) => {
   const [isLiked, setIsLiked] = useState(false);
   const navigate = useNavigate();
 
@@ -22,7 +22,7 @@ const ProductCard = ({name, price, rating, sold, id}) => {
   return (
     <div className="product-card" onClick={handleCardClick}>
       <div className="product-image">
-        <img src="https://via.placeholder.com/150" alt="Product" />
+        <img src={imageUrl} alt="Product" />
       </div>
       <div className="product-details">
         <div className="product-title">
