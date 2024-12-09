@@ -72,3 +72,10 @@
   .wishlist img.not-clicked {
     filter: grayscale(100%); 
   }
+  
+  .estimated-price {
+    display: flex;
+    margin-top: 0px;
+    color: gray;
+    font-size: medium;
+  }
